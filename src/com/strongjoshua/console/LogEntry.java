@@ -18,10 +18,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class LogEntry {
 	private String text;
-	private LogLevel level;
+	private LogEntryType level;
 	private long timeStamp;
 
-	protected LogEntry (String msg, LogLevel level) {
+	protected LogEntry (String msg, LogEntryType level) {
 		this.text = msg;
 		this.level = level;
 		timeStamp = TimeUtils.millis();
@@ -33,7 +33,7 @@ public class LogEntry {
 
 	protected String toConsoleString () {
 		String r = "";
-		if (level.equals(LogLevel.COMMAND)) {
+		if (level.equals(LogEntryType.COMMAND)) {
 			r += level.getIdentifier();
 		}
 		r += text;

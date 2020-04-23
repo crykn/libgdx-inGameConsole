@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.strongjoshua.console.CommandExecutor;
 import com.strongjoshua.console.Console;
 import com.strongjoshua.console.GUIConsole;
-import com.strongjoshua.console.LogLevel;
+import com.strongjoshua.console.LogEntryType;
 import com.strongjoshua.console.annotation.ConsoleDoc;
 import com.strongjoshua.console.annotation.HiddenCommand;
 
@@ -195,7 +195,7 @@ public class Box2DTest extends ApplicationAdapter {
 
 				createExplosion(worldVector.x, worldVector.y, 2000);
 
-				console.log(String.format("Created touch explosion at %.2f, %.2f!", worldVector.x, worldVector.y), LogLevel.SUCCESS);
+				console.log(String.format("Created touch explosion at %.2f, %.2f!", worldVector.x, worldVector.y), LogEntryType.SUCCESS);
 			}
 		}
 
@@ -278,7 +278,7 @@ public class Box2DTest extends ApplicationAdapter {
 			"The amount of force"})
 		public void explode (float x, float y, float maxForce) {
 			createExplosion(x, y, maxForce);
-			console.log("Created console explosion!", LogLevel.SUCCESS);
+			console.log("Created console explosion!", LogEntryType.SUCCESS);
 		}
 
 		public void clear () {

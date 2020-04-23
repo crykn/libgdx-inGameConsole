@@ -227,7 +227,7 @@ public class GUIConsole extends AbstractConsole {
 		appInput = Gdx.input.getInputProcessor();
 		if (appInput != null) {
 			if (hasStage(appInput)) {
-				log("Console already added to input processor!", LogLevel.ERROR);
+				log("Console already added to input processor!", LogEntryType.ERROR);
 				Gdx.app.log("Console", "Already added to input processor!");
 				return;
 			}
@@ -301,8 +301,8 @@ public class GUIConsole extends AbstractConsole {
 	}
 
 	@Override
-	public void log (String msg, LogLevel level) {
-		super.log(msg, level);
+	public void log (String msg, LogEntryType type) {
+		super.log(msg, type);
 		display.refresh();
 	}
 
@@ -515,11 +515,11 @@ public class GUIConsole extends AbstractConsole {
 				} else {
 					try {
 						l = labelClass.getConstructor(CharSequence.class, Skin.class, String.class, Color.class).newInstance("", skin,
-							fontName, LogLevel.DEFAULT.getColor());
+							fontName, LogEntryType.DEFAULT.getColor());
 					} catch (Exception e) {
 						try {
 							l = labelClass.getConstructor(CharSequence.class, String.class, Color.class).newInstance("", fontName,
-								LogLevel.DEFAULT.getColor());
+								LogEntryType.DEFAULT.getColor());
 						} catch (Exception e2) {
 							throw new RuntimeException(
 								"Label class does not support either (<String>, <Skin>, <String>, <Color>) or (<String>, <String>, <Color>) constructors.");
@@ -588,7 +588,7 @@ public class GUIConsole extends AbstractConsole {
 			} else {
 				log(
 					"No command executor has been set. " + "Please call setCommandExecutor for this console in your code and restart.",
-					LogLevel.ERROR);
+					LogEntryType.ERROR);
 			}
 			input.setText("");
 			return true;

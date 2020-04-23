@@ -15,12 +15,12 @@ package com.strongjoshua.console;
 
 import com.badlogic.gdx.graphics.Color;
 
-/** Specifies the 'level' of a log entry. The level affects the color of the entry in the console and is also displayed next to
+/** Specifies the type of a log entry. The type affects the color of the entry in the console and is also displayed next to
  * the entry when the log entries are printed to a file with {@link Console#printLogToFile(String)}.
  *
  * @author StrongJoshua */
-public enum LogLevel {
-	/** The default log level. Prints in white to the console and has no special indicator in the log file.<br>
+public enum LogEntryType {
+	/** The default log type. Prints in white to the console and has no special indicator in the log file.<br>
 	 * <b>Intentional Use:</b> debugging. */
 	DEFAULT(new Color(1, 1, 1, 1), ""),
 	/** Use to print errors. Prints in red to the console and has the '<i>ERROR</i>' marking in the log file.<br>
@@ -37,7 +37,7 @@ public enum LogLevel {
 	private Color color;
 	private String identifier;
 
-	LogLevel (Color c, String identity) {
+	LogEntryType (Color c, String identity) {
 		this.color = c;
 		identifier = identity;
 	}

@@ -12,7 +12,7 @@ import com.kotcrab.vis.ui.widget.*;
 import com.strongjoshua.console.CommandExecutor;
 import com.strongjoshua.console.Console;
 import com.strongjoshua.console.GUIConsole;
-import com.strongjoshua.console.LogLevel;
+import com.strongjoshua.console.LogEntryType;
 
 public class VisUITest extends ApplicationAdapter {
 	public static void main (String[] args) {
@@ -43,11 +43,11 @@ public class VisUITest extends ApplicationAdapter {
 
 	private class MyCommandExecutor extends CommandExecutor {
 		public void success () {
-			console.log("Success", LogLevel.SUCCESS);
+			console.log("Success", LogEntryType.SUCCESS);
 		}
 
 		public void error () {
-			console.log("Error", LogLevel.ERROR);
+			console.log("Error", LogEntryType.ERROR);
 		}
 	}
 }

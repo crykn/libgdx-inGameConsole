@@ -31,7 +31,7 @@ public class Log {
 		this.numEntries = numEntries;
 	}
 
-	protected void addEntry (String msg, LogLevel level) {
+	protected void addEntry (String msg, LogEntryType level) {
 		logEntries.add(new LogEntry(msg, level));
 		if (logEntries.size > numEntries && numEntries != Console.UNLIMITED_ENTRIES) {
 			logEntries.removeIndex(0);

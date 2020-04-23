@@ -1,4 +1,3 @@
-
 package com.strongjoshua.console.annotation;
 
 import java.lang.annotation.ElementType;

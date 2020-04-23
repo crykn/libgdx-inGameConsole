@@ -85,27 +85,27 @@ public interface Console {
 	/** Logs a new entry to the console.
 	 *
 	 * @param msg The message to be logged.
-	 * @param level The {@link LogLevel} of the log entry.
-	 * @see LogLevel */
-	void log (String msg, LogLevel level);
+	 * @param type The {@link LogEntryType} of the log entry.
+	 * @see LogEntryType */
+	void log (String msg, LogEntryType type);
 
-	/** Logs a new entry to the console using {@link LogLevel#DEFAULT}.
+	/** Logs a new entry to the console using {@link LogEntryType#DEFAULT}.
 	 *
 	 * @param msg The message to be logged.
-	 * @see LogLevel
-	 * @see Console#log(String, LogLevel) */
+	 * @see LogEntryType
+	 * @see Console#log(String, LogEntryType) */
 	void log (String msg);
 
-	/** Logs a new entry to the console using {@link LogLevel#ERROR}.
+	/** Logs a new entry to the console using {@link LogEntryType#ERROR}.
 	 *
 	 * @param exception The exception to be logged */
 	void log (Throwable exception);
 
-	/** Logs a new entry to the console using {@link LogLevel}.
+	/** Logs a new entry to the console using {@link LogEntryType}.
 	 *
 	 * @param exception The exception to be logged
-	 * @param level The {@link LogLevel} of the log entry. */
-	void log (Throwable exception, LogLevel level);
+	 * @param type The {@link LogEntryType} of the log entry. */
+	void log (Throwable exception, LogEntryType type);
 
 	/** Prints all log entries to the given file. Log entries include logs in the code and commands made from within in the console
 	 * while the program is running.<br>

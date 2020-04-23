@@ -13,6 +13,9 @@
 
 package com.strongjoshua.console;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
@@ -25,9 +28,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.strongjoshua.console.annotation.ConsoleDoc;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 /** @author Eric */
 public abstract class AbstractConsole implements Console, Disposable {
@@ -51,34 +51,30 @@ public abstract class AbstractConsole implements Console, Disposable {
 	}
 
 	@Override
-	public void log (String msg, LogLevel level) {
-		log.addEntry(msg, level);
+	public void log (String msg, LogEntryType type) {
+		log.addEntry(msg, type);
 
 		if (logToSystem) {
-			switch (level) {
-			case ERROR:
+			if (type == LogEntryType.ERROR)
 				System.err.println("> " + msg);
-				break;
-			default:
+			else
 				System.out.println("> " + msg);
-				break;
-			}
 		}
 	}
 
 	@Override
 	public void log (String msg) {
-		this.log(msg, LogLevel.DEFAULT);
+		this.log(msg, LogEntryType.DEFAULT);
 	}
 
 	@Override
-	public void log (Throwable exception, LogLevel level) {
-		this.log(ConsoleUtils.exceptionToString(exception), level);
+	public void log (Throwable exception, LogEntryType type) {
+		this.log(ConsoleUtils.exceptionToString(exception), type);
 	}
 
 	@Override
 	public void log (Throwable exception) {
-		this.log(exception, LogLevel.ERROR);
+		this.log(exception, LogEntryType.ERROR);
 	}
 
 	@Override
@@ -89,9 +85,9 @@ public abstract class AbstractConsole implements Console, Disposable {
 	@Override
 	public void printLogToFile (FileHandle fh) {
 		if (log.printToFile(fh)) {
-			log("Successfully wrote logs to file.", LogLevel.SUCCESS);
+			log("Successfully wrote logs to file.", LogEntryType.SUCCESS);
 		} else {
-			log("Unable to write logs to file.", LogLevel.ERROR);
+			log("Unable to write logs to file.", LogEntryType.ERROR);
 		}
 	}
 
@@ -115,7 +111,7 @@ public abstract class AbstractConsole implements Console, Disposable {
 	public void execCommand (String command) {
 		if (disabled) return;
 
-		log(command, LogLevel.COMMAND);
+		log(command, LogEntryType.COMMAND);
 
 		String[] parts = command.split(" ");
 		String methodName = parts[0];
@@ -138,7 +134,7 @@ public abstract class AbstractConsole implements Console, Disposable {
 		}
 
 		if (possible.size <= 0) {
-			log("No such method found.", LogLevel.ERROR);
+			log("No such method found.", LogEntryType.ERROR);
 			return;
 		}
 
@@ -193,16 +189,16 @@ public abstract class AbstractConsole implements Console, Disposable {
 						msg = "Unknown Error";
 						e.printStackTrace();
 					}
-					log(msg, LogLevel.ERROR);
+					log(msg, LogEntryType.ERROR);
 					if (consoleTrace) {
-						log(e, LogLevel.ERROR);
+						log(e, LogEntryType.ERROR);
 					}
 					return;
 				}
 			}
 		}
 
-		log("Bad parameters. Check your code.", LogLevel.ERROR);
+		log("Bad parameters. Check your code.", LogEntryType.ERROR);
 	}
 
 	private ArrayList<Method> getAllMethods () {
