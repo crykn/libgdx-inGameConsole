@@ -29,9 +29,7 @@ import com.strongjoshua.console.annotation.ConsoleDoc;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @author Eric
- */
+/** @author Eric */
 public abstract class AbstractConsole implements Console, Disposable {
 	protected final Log log;
 	protected CommandExecutor exec;
@@ -47,11 +45,13 @@ public abstract class AbstractConsole implements Console, Disposable {
 		log = new Log();
 	}
 
-	@Override public void setLoggingToSystem (Boolean log) {
+	@Override
+	public void setLoggingToSystem (Boolean log) {
 		this.logToSystem = log;
 	}
 
-	@Override public void log (String msg, LogLevel level) {
+	@Override
+	public void log (String msg, LogLevel level) {
 		log.addEntry(msg, level);
 
 		if (logToSystem) {
@@ -66,23 +66,28 @@ public abstract class AbstractConsole implements Console, Disposable {
 		}
 	}
 
-	@Override public void log (String msg) {
+	@Override
+	public void log (String msg) {
 		this.log(msg, LogLevel.DEFAULT);
 	}
 
-	@Override public void log (Throwable exception, LogLevel level) {
+	@Override
+	public void log (Throwable exception, LogLevel level) {
 		this.log(ConsoleUtils.exceptionToString(exception), level);
 	}
 
-	@Override public void log (Throwable exception) {
+	@Override
+	public void log (Throwable exception) {
 		this.log(exception, LogLevel.ERROR);
 	}
 
-	@Override public void printLogToFile (String file) {
+	@Override
+	public void printLogToFile (String file) {
 		this.printLogToFile(Gdx.files.local(file));
 	}
 
-	@Override public void printLogToFile (FileHandle fh) {
+	@Override
+	public void printLogToFile (FileHandle fh) {
 		if (log.printToFile(fh)) {
 			log("Successfully wrote logs to file.", LogLevel.SUCCESS);
 		} else {
@@ -90,22 +95,25 @@ public abstract class AbstractConsole implements Console, Disposable {
 		}
 	}
 
-	@Override public boolean isDisabled () {
+	@Override
+	public boolean isDisabled () {
 		return disabled;
 	}
 
-	@Override public void setDisabled (boolean disabled) {
+	@Override
+	public void setDisabled (boolean disabled) {
 		this.disabled = disabled;
 	}
 
-	@Override public void setCommandExecutor (CommandExecutor commandExec) {
+	@Override
+	public void setCommandExecutor (CommandExecutor commandExec) {
 		exec = commandExec;
 		exec.setConsole(this);
 	}
 
-	@Override public void execCommand (String command) {
-		if (disabled)
-			return;
+	@Override
+	public void execCommand (String command) {
+		if (disabled) return;
 
 		log(command, LogLevel.COMMAND);
 
@@ -207,7 +215,8 @@ public abstract class AbstractConsole implements Console, Disposable {
 		return methods;
 	}
 
-	@Override public void printCommands () {
+	@Override
+	public void printCommands () {
 		for (Method m : getAllMethods()) {
 			if (m.isPublic() && ConsoleUtils.canDisplayCommand(this, m)) {
 				String s = "";
@@ -227,7 +236,8 @@ public abstract class AbstractConsole implements Console, Disposable {
 		}
 	}
 
-	@Override public void printHelp (String command) {
+	@Override
+	public void printHelp (String command) {
 		boolean found = false;
 		for (Method m : getAllMethods()) {
 			if (m.getName().equals(command)) {
@@ -245,8 +255,7 @@ public abstract class AbstractConsole implements Console, Disposable {
 							// using spaces this way works with monotype fonts
 							sb.append(" ");
 						sb.append(params[i].getSimpleName()).append(": ");
-						if (i < doc.paramDescriptions().length)
-							sb.append(doc.paramDescriptions()[i]);
+						if (i < doc.paramDescriptions().length) sb.append(doc.paramDescriptions()[i]);
 					}
 				} else {
 					Class<?>[] params = m.getParameterTypes();
@@ -262,113 +271,144 @@ public abstract class AbstractConsole implements Console, Disposable {
 			}
 		}
 
-		if (!found)
-			log("Command does not exist.");
+		if (!found) log("Command does not exist.");
 	}
 
-	@Override public void setExecuteHiddenCommands (boolean enabled) {
+	@Override
+	public void setExecuteHiddenCommands (boolean enabled) {
 		executeHiddenCommands = enabled;
 	}
 
-	@Override public boolean isExecuteHiddenCommandsEnabled () {
+	@Override
+	public boolean isExecuteHiddenCommandsEnabled () {
 		return executeHiddenCommands;
 	}
 
-	@Override public void setDisplayHiddenCommands (boolean enabled) {
+	@Override
+	public void setDisplayHiddenCommands (boolean enabled) {
 		displayHiddenCommands = enabled;
 	}
 
-	@Override public boolean isDisplayHiddenCommandsEnabled () {
+	@Override
+	public boolean isDisplayHiddenCommandsEnabled () {
 		return displayHiddenCommands;
 	}
 
-	@Override public void setConsoleStackTrace (boolean enabled) {
+	@Override
+	public void setConsoleStackTrace (boolean enabled) {
 		this.consoleTrace = enabled;
 	}
 
-	@Override public void setMaxEntries (int numEntries) {
+	@Override
+	public void setMaxEntries (int numEntries) {
 	}
 
-	@Override public void clear () {
+	@Override
+	public void clear () {
 	}
 
-	@Override public void setSize (int width, int height) {
+	@Override
+	public void setSize (int width, int height) {
 	}
 
-	@Override public void setSizePercent (float wPct, float hPct) {
+	@Override
+	public void setSizePercent (float wPct, float hPct) {
 	}
 
-	@Override public void setPosition (int x, int y) {
+	@Override
+	public void setPosition (int x, int y) {
 	}
 
-	@Override public void setPositionPercent (float xPosPct, float yPosPct) {
+	@Override
+	public void setPositionPercent (float xPosPct, float yPosPct) {
 	}
 
-	@Override public void resetInputProcessing () {
+	@Override
+	public void resetInputProcessing () {
 	}
 
-	@Override public InputProcessor getInputProcessor () {
+	@Override
+	public InputProcessor getInputProcessor () {
 		return null;
 	}
 
-	@Override public void draw () {
+	@Override
+	public void draw () {
 	}
 
-	@Override public void refresh () {
+	@Override
+	public void refresh () {
 	}
 
-	@Override public void refresh (boolean retain) {
+	@Override
+	public void refresh (boolean retain) {
 	}
 
-	@Override public int getDisplayKeyID () {
+	@Override
+	public int getDisplayKeyID () {
 		return 0;
 	}
 
-	@Override public void setDisplayKeyID (int code) {
+	@Override
+	public void setDisplayKeyID (int code) {
 	}
 
-	@Override public boolean hitsConsole (float screenX, float screenY) {
+	@Override
+	public boolean hitsConsole (float screenX, float screenY) {
 		return false;
 	}
 
-	@Override public void dispose () {
+	@Override
+	public void dispose () {
 	}
 
-	@Override public boolean isVisible () {
+	@Override
+	public boolean isVisible () {
 		return false;
 	}
 
-	@Override public void setVisible (boolean visible) {
+	@Override
+	public void setVisible (boolean visible) {
 	}
 
-	@Override public void select () {
+	@Override
+	public void select () {
 	}
 
-	@Override public void deselect () {
+	@Override
+	public void deselect () {
 	}
 
-	@Override public void setTitle (String title) {
+	@Override
+	public void setTitle (String title) {
 	}
 
-	@Override public void setHoverAlpha (float alpha) {
+	@Override
+	public void setHoverAlpha (float alpha) {
 	}
 
-	@Override public void setNoHoverAlpha (float alpha) {
+	@Override
+	public void setNoHoverAlpha (float alpha) {
 	}
 
-	@Override public void setHoverColor (Color color) {
+	@Override
+	public void setHoverColor (Color color) {
 	}
 
-	@Override public void setNoHoverColor (Color color) {
+	@Override
+	public void setNoHoverColor (Color color) {
 	}
 
-	@Override public void enableSubmitButton (boolean enable) {
+	@Override
+	public void enableSubmitButton (boolean enable) {
 	}
 
-	@Override public void setSubmitText (String text) {
+	@Override
+	public void setSubmitText (String text) {
 	}
 
-	@Override public Window getWindow () {
+	@Override
+	public Window getWindow () {
 		return null;
 	}
 }

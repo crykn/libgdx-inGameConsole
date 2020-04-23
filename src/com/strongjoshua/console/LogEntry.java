@@ -40,7 +40,8 @@ public class LogEntry {
 		return r;
 	}
 
-	@Override public String toString () {
+	@Override
+	public String toString () {
 		return timeStamp + ": " + level.getIdentifier() + text;
 	}
 }

@@ -13,15 +13,11 @@
 
 package com.strongjoshua.console;
 
-/**
- * Headless Console used for servers.
+/** Headless Console used for servers.
  *
- * @author Eric
- */
+ * @author Eric */
 public class HeadlessConsole extends AbstractConsole {
-	/**
-	 * Creates an Headless console
-	 */
+	/** Creates an Headless console */
 	public HeadlessConsole () {
 		logToSystem = true;
 	}

@@ -1,3 +1,4 @@
+
 package com.strongjoshua.console;
 
 import com.badlogic.gdx.Gdx;
@@ -33,11 +34,10 @@ public class ConsoleContext {
 			}
 		}
 		copy.addListener(new ClickListener() {
-			@Override public void clicked (InputEvent event, float x, float y) {
-				if (event.getPointer() != 0)
-					return;
-				if (label == null)
-					throw new RuntimeException("Trying to copy a null label (this should never happen).");
+			@Override
+			public void clicked (InputEvent event, float x, float y) {
+				if (event.getPointer() != 0) return;
+				if (label == null) throw new RuntimeException("Trying to copy a null label (this should never happen).");
 				Gdx.app.getClipboard().setContents(label.getText().toString().trim());
 				ConsoleContext.this.remove();
 			}
@@ -50,9 +50,9 @@ public class ConsoleContext {
 		root.setSize(root.getPrefWidth(), root.getPrefHeight());
 
 		stageListener = new InputListener() {
-			@Override public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				if (ConsoleContext.this.root.hit(x, y, false) == null)
-					remove();
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				if (ConsoleContext.this.root.hit(x, y, false) == null) remove();
 				return true;
 			}
 		};
@@ -70,8 +70,7 @@ public class ConsoleContext {
 	}
 
 	protected boolean remove () {
-		if (root.getStage() != null)
-			root.getStage().removeListener(stageListener);
+		if (root.getStage() != null) root.getStage().removeListener(stageListener);
 		return root.remove();
 	}
 
@@ -86,11 +85,13 @@ public class ConsoleContext {
 			this.label = l;
 		}
 
-		@Override public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		@Override
+		public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
 			label.setColor(Color.CYAN);
 		}
 
-		@Override public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
+		@Override
+		public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
 			label.setColor(Color.WHITE);
 		}
 	}

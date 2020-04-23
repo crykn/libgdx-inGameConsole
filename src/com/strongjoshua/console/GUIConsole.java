@@ -31,18 +31,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-/**
- * A simple console that allows live logging, and live execution of methods, from within an application. Please see the <a
- * href="https://github.com/StrongJoshua/libgdx-inGameConsole">GitHub Repository</a> for more information.
+/** A simple console that allows live logging, and live execution of methods, from within an application. Please see the
+ * <a href="https://github.com/StrongJoshua/libgdx-inGameConsole">GitHub Repository</a> for more information.
  *
- * @author StrongJoshua
- */
+ * @author StrongJoshua */
 public class GUIConsole extends AbstractConsole {
 	private int keyID;
 
 	private ConsoleDisplay display;
 	private boolean hidden = true;
-    private boolean usesMultiplexer;
+	private boolean usesMultiplexer;
 	private InputProcessor appInput;
 	private InputMultiplexer multiplexer;
 	private Stage stage;
@@ -62,71 +60,61 @@ public class GUIConsole extends AbstractConsole {
 	private Class<? extends Label> labelClass;
 	private Class<? extends ScrollPane> scrollPaneClass;
 
-	/**
-	 * Creates the console using the default skin.<br>
+	/** Creates the console using the default skin.<br>
 	 * <b>***IMPORTANT***</b> Call {@link Console#dispose()} to make your {@link InputProcessor} the default processor again (this
-	 * console uses a multiplexer to circumvent it).
-	 * <br>Default key toggle is apostrophe: '
+	 * console uses a multiplexer to circumvent it). <br>
+	 * Default key toggle is apostrophe: '
 	 *
-	 * @see Console#dispose()
-	 */
+	 * @see Console#dispose() */
 	public GUIConsole () {
 		this(new Skin(Gdx.files.classpath("default_skin/uiskin.json")));
 	}
 
-	/**
-	 * Creates the console.<br>
+	/** Creates the console.<br>
 	 * <b>***IMPORTANT***</b> Call {@link Console#dispose()} to make your {@link InputProcessor} the default processor again (this
-	 * console uses a multiplexer to circumvent it).
-	 * <br>Default key toggle is apostrophe: '
+	 * console uses a multiplexer to circumvent it). <br>
+	 * Default key toggle is apostrophe: '
 	 *
 	 * @param skin Uses skins for Label, TextField, and Table. Skin <b>must</b> contain a font called 'default-font'.
-	 * @see Console#dispose()
-	 */
+	 * @see Console#dispose() */
 	public GUIConsole (Skin skin) {
 		this(skin, true);
 	}
 
-	/**
-	 * Creates the console.<br>
+	/** Creates the console.<br>
 	 * <b>***IMPORTANT***</b> Call {@link Console#dispose()} to make your {@link InputProcessor} the default processor again (this
-	 * console uses a multiplexer to circumvent it).
-	 * <br>Default key toggle is apostrophe: '
+	 * console uses a multiplexer to circumvent it). <br>
+	 * Default key toggle is apostrophe: '
 	 *
 	 * @param useMultiplexer If internal multiplexer should be used
-	 * @see Console#dispose()
-	 */
+	 * @see Console#dispose() */
 	public GUIConsole (boolean useMultiplexer) {
 		this(new Skin(Gdx.files.classpath("default_skin/uiskin.json")), useMultiplexer);
 	}
 
-	/**
-	 * Creates the console.<br>
+	/** Creates the console.<br>
 	 * <b>***IMPORTANT***</b> Call {@link Console#dispose()} to make your {@link InputProcessor} the default processor again (this
-	 * console uses a multiplexer to circumvent it).
-	 * <br>Default key toggle is apostrophe: '
+	 * console uses a multiplexer to circumvent it). <br>
+	 * Default key toggle is apostrophe: '
 	 *
-	 * @param skin           Uses skins for Label, TextField, and Table. Skin <b>must</b> contain a font called 'default-font'.
+	 * @param skin Uses skins for Label, TextField, and Table. Skin <b>must</b> contain a font called 'default-font'.
 	 * @param useMultiplexer If internal multiplexer should be used
-	 * @see Console#dispose()
-	 */
+	 * @see Console#dispose() */
 	public GUIConsole (Skin skin, boolean useMultiplexer) {
 		this(skin, useMultiplexer, Keys.APOSTROPHE);
 	}
 
-	/**
-	 * Creates the console.<br>
+	/** Creates the console.<br>
 	 * <b>***IMPORTANT***</b> Call {@link Console#dispose()} to make your {@link InputProcessor} the default processor again (this
 	 * console uses a multiplexer to circumvent it).
 	 *
-	 * @param skin           Uses skins for Label, TextField, and Table. Skin <b>must</b> contain a font called 'default-font'.
+	 * @param skin Uses skins for Label, TextField, and Table. Skin <b>must</b> contain a font called 'default-font'.
 	 * @param useMultiplexer If internal multiplexer should be used
-	 * @param keyID          Sets the key used to open/close the console (default is apostrophe: ')
-	 * @see Console#dispose()
-	 */
+	 * @param keyID Sets the key used to open/close the console (default is apostrophe: ')
+	 * @see Console#dispose() */
 	public GUIConsole (Skin skin, boolean useMultiplexer, int keyID) {
-		this(skin, useMultiplexer, keyID, Window.class, Table.class, "default-rect", TextField.class, TextButton.class,
-			Label.class, ScrollPane.class);
+		this(skin, useMultiplexer, keyID, Window.class, Table.class, "default-rect", TextField.class, TextButton.class, Label.class,
+			ScrollPane.class);
 	}
 
 	public GUIConsole (Skin skin, boolean useMultiplexer, int keyID, Class<? extends Window> windowClass,
@@ -184,7 +172,8 @@ public class GUIConsole extends AbstractConsole {
 		setPositionPercent(50, 50);
 	}
 
-	@Override public void setMaxEntries (int numEntries) {
+	@Override
+	public void setMaxEntries (int numEntries) {
 		if (numEntries > 0 || numEntries == UNLIMITED_ENTRIES) {
 			log.setMaxEntries(numEntries);
 		} else {
@@ -192,19 +181,22 @@ public class GUIConsole extends AbstractConsole {
 		}
 	}
 
-	@Override public void clear () {
+	@Override
+	public void clear () {
 		log.getLogEntries().clear();
 		display.refresh();
 	}
 
-	@Override public void setSize (int width, int height) {
+	@Override
+	public void setSize (int width, int height) {
 		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException("Pixel size must be greater than 0.");
 		}
 		consoleWindow.setSize(width, height);
 	}
 
-	@Override public void setSizePercent (float wPct, float hPct) {
+	@Override
+	public void setSizePercent (float wPct, float hPct) {
 		if (wPct <= 0 || hPct <= 0) {
 			throw new IllegalArgumentException("Size percentage must be greater than 0.");
 		}
@@ -215,11 +207,13 @@ public class GUIConsole extends AbstractConsole {
 		consoleWindow.setSize(w * wPct / 100.0f, h * hPct / 100.0f);
 	}
 
-	@Override public void setPosition (int x, int y) {
+	@Override
+	public void setPosition (int x, int y) {
 		consoleWindow.setPosition(x, y);
 	}
 
-	@Override public void setPositionPercent (float xPosPct, float yPosPct) {
+	@Override
+	public void setPositionPercent (float xPosPct, float yPosPct) {
 		if (xPosPct > 100 || yPosPct > 100) {
 			throw new IllegalArgumentException("Error: The console would be drawn outside of the screen.");
 		}
@@ -227,7 +221,8 @@ public class GUIConsole extends AbstractConsole {
 		consoleWindow.setPosition(w * xPosPct / 100.0f, h * yPosPct / 100.0f);
 	}
 
-	@Override public void resetInputProcessing () {
+	@Override
+	public void resetInputProcessing () {
 		usesMultiplexer = true;
 		appInput = Gdx.input.getInputProcessor();
 		if (appInput != null) {
@@ -245,13 +240,11 @@ public class GUIConsole extends AbstractConsole {
 		}
 	}
 
-	/**
-	 * Compares the given processor to the console's stage. If given a multiplexer, it is iterated through recursively to check all
-	 * of the multiplexer's processors for comparison.
+	/** Compares the given processor to the console's stage. If given a multiplexer, it is iterated through recursively to check
+	 * all of the multiplexer's processors for comparison.
 	 *
 	 * @param processor
-	 * @return processor == this.stage
-	 */
+	 * @return processor == this.stage */
 	private boolean hasStage (InputProcessor processor) {
 		if (!(processor instanceof InputMultiplexer)) {
 			return processor == stage;
@@ -266,11 +259,13 @@ public class GUIConsole extends AbstractConsole {
 		return false;
 	}
 
-	@Override public InputProcessor getInputProcessor () {
+	@Override
+	public InputProcessor getInputProcessor () {
 		return stage;
 	}
 
-	@Override public void draw () {
+	@Override
+	public void draw () {
 		if (disabled) {
 			return;
 		}
@@ -282,11 +277,13 @@ public class GUIConsole extends AbstractConsole {
 		stage.draw();
 	}
 
-	@Override public void refresh () {
+	@Override
+	public void refresh () {
 		this.refresh(true);
 	}
 
-	@Override public void refresh (boolean retain) {
+	@Override
+	public void refresh (boolean retain) {
 		float oldWPct = 0, oldHPct = 0, oldXPosPct = 0, oldYPosPct = 0;
 		if (retain) {
 			oldWPct = consoleWindow.getWidth() / stage.getWidth() * 100;
@@ -303,30 +300,35 @@ public class GUIConsole extends AbstractConsole {
 		}
 	}
 
-	@Override public void log (String msg, LogLevel level) {
+	@Override
+	public void log (String msg, LogLevel level) {
 		super.log(msg, level);
 		display.refresh();
 	}
 
-	@Override public void setDisabled (boolean disabled) {
+	@Override
+	public void setDisabled (boolean disabled) {
 		if (disabled) {
 			display.setHidden(true);
 		}
 		this.disabled = disabled;
 	}
 
-	@Override public int getDisplayKeyID () {
+	@Override
+	public int getDisplayKeyID () {
 		return keyID;
 	}
 
-	@Override public void setDisplayKeyID (int code) {
+	@Override
+	public void setDisplayKeyID (int code) {
 		if (code == Keys.ENTER) {
 			return;
 		}
 		keyID = code;
 	}
 
-	@Override public boolean hitsConsole (float screenX, float screenY) {
+	@Override
+	public boolean hitsConsole (float screenX, float screenY) {
 		if (disabled || hidden) {
 			return false;
 		}
@@ -334,30 +336,36 @@ public class GUIConsole extends AbstractConsole {
 		return stage.hit(stageCoords.x, stageCoords.y, true) != null;
 	}
 
-	@Override public void dispose () {
+	@Override
+	public void dispose () {
 		if (usesMultiplexer && appInput != null) {
 			Gdx.input.setInputProcessor(appInput);
 		}
 		stage.dispose();
 	}
 
-	@Override public boolean isVisible () {
+	@Override
+	public boolean isVisible () {
 		return !hidden;
 	}
 
-	@Override public void setVisible (boolean visible) {
+	@Override
+	public void setVisible (boolean visible) {
 		display.setHidden(!visible);
 	}
 
-	@Override public void select () {
+	@Override
+	public void select () {
 		display.select();
 	}
 
-	@Override public void deselect () {
+	@Override
+	public void deselect () {
 		display.deselect();
 	}
 
-	@Override public void setTitle (String title) {
+	@Override
+	public void setTitle (String title) {
 		consoleWindow.getTitleLabel().setText(title);
 	}
 
@@ -365,35 +373,42 @@ public class GUIConsole extends AbstractConsole {
 		consoleWindow.setColor(hasHover ? hoverColor : noHoverColor);
 	}
 
-	@Override public void setHoverAlpha (float alpha) {
+	@Override
+	public void setHoverAlpha (float alpha) {
 		hoverColor.a = alpha;
 		refreshWindowColor();
 	}
 
-	@Override public void setNoHoverAlpha (float alpha) {
+	@Override
+	public void setNoHoverAlpha (float alpha) {
 		noHoverColor.a = alpha;
 		refreshWindowColor();
 	}
 
-	@Override public void setHoverColor (Color color) {
+	@Override
+	public void setHoverColor (Color color) {
 		hoverColor = color;
 		refreshWindowColor();
 	}
 
-	@Override public void setNoHoverColor (Color color) {
+	@Override
+	public void setNoHoverColor (Color color) {
 		noHoverColor = color;
 		refreshWindowColor();
 	}
 
-	@Override public void enableSubmitButton (boolean enable) {
+	@Override
+	public void enableSubmitButton (boolean enable) {
 		display.showSubmit(enable);
 	}
 
-	@Override public void setSubmitText (String text) {
+	@Override
+	public void setSubmitText (String text) {
 		display.setSubmitText(text);
 	}
 
-	@Override public Window getWindow () {
+	@Override
+	public Window getWindow () {
 		return this.consoleWindow;
 	}
 
@@ -451,7 +466,8 @@ public class GUIConsole extends AbstractConsole {
 				}
 			}
 			submit.addListener(new ClickListener() {
-				@Override public void clicked (InputEvent event, float x, float y) {
+				@Override
+				public void clicked (InputEvent event, float x, float y) {
 					submit();
 				}
 			});
@@ -470,7 +486,8 @@ public class GUIConsole extends AbstractConsole {
 			scroll.setScrollbarsOnTop(false);
 			scroll.setOverscroll(false, false);
 			scroll.addListener(new DragScrollListener(scroll) {
-				@Override public boolean scrolled (InputEvent event, float x, float y, int amount) {
+				@Override
+				public boolean scrolled (InputEvent event, float x, float y, int amount) {
 					closeContext();
 					return super.scrolled(event, x, y, amount);
 				}
@@ -497,12 +514,12 @@ public class GUIConsole extends AbstractConsole {
 					l = labels.get(i);
 				} else {
 					try {
-						l = labelClass.getConstructor(CharSequence.class, Skin.class, String.class, Color.class)
-							.newInstance("", skin, fontName, LogLevel.DEFAULT.getColor());
+						l = labelClass.getConstructor(CharSequence.class, Skin.class, String.class, Color.class).newInstance("", skin,
+							fontName, LogLevel.DEFAULT.getColor());
 					} catch (Exception e) {
 						try {
-							l = labelClass.getConstructor(CharSequence.class, String.class, Color.class)
-								.newInstance("", fontName, LogLevel.DEFAULT.getColor());
+							l = labelClass.getConstructor(CharSequence.class, String.class, Color.class).newInstance("", fontName,
+								LogLevel.DEFAULT.getColor());
 						} catch (Exception e2) {
 							throw new RuntimeException(
 								"Label class does not support either (<String>, <Skin>, <String>, <Color>) or (<String>, <String>, <Color>) constructors.");
@@ -569,8 +586,9 @@ public class GUIConsole extends AbstractConsole {
 				commandHistory.store(s);
 				execCommand(s);
 			} else {
-				log("No command executor has been set. "
-					+ "Please call setCommandExecutor for this console in your code and restart.", LogLevel.ERROR);
+				log(
+					"No command executor has been set. " + "Please call setCommandExecutor for this console in your code and restart.",
+					LogLevel.ERROR);
 			}
 			input.setText("");
 			return true;
@@ -588,7 +606,8 @@ public class GUIConsole extends AbstractConsole {
 	}
 
 	private class FieldListener implements TextFieldListener {
-		@Override public void keyTyped (TextField textField, char c) {
+		@Override
+		public void keyTyped (TextField textField, char c) {
 			if (("" + c).equalsIgnoreCase(Keys.toString(keyID))) {
 				String s = textField.getText();
 				textField.setText(s.substring(0, s.length() - 1));
@@ -603,9 +622,9 @@ public class GUIConsole extends AbstractConsole {
 			input = tf;
 		}
 
-		@Override public boolean keyDown (InputEvent event, int keycode) {
-			if (disabled)
-				return false;
+		@Override
+		public boolean keyDown (InputEvent event, int keycode) {
+			if (disabled) return false;
 
 			// reset command completer because input string may have changed
 			if (keycode != Keys.TAB) {
@@ -640,9 +659,9 @@ public class GUIConsole extends AbstractConsole {
 	}
 
 	private class DisplayListener extends InputListener {
-		@Override public boolean keyDown (InputEvent event, int keycode) {
-			if (disabled)
-				return false;
+		@Override
+		public boolean keyDown (InputEvent event, int keycode) {
+			if (disabled) return false;
 			if (keycode == keyID) {
 				display.setHidden(!hidden);
 				return true;
@@ -650,16 +669,16 @@ public class GUIConsole extends AbstractConsole {
 			return false;
 		}
 
-		@Override public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
-			if (pointer != -1)
-				return;
+		@Override
+		public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			if (pointer != -1) return;
 			hasHover = true;
 			refreshWindowColor();
 		}
 
-		@Override public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
-			if (pointer != -1)
-				return;
+		@Override
+		public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
+			if (pointer != -1) return;
 			hasHover = false;
 			refreshWindowColor();
 		}
@@ -674,20 +693,21 @@ public class GUIConsole extends AbstractConsole {
 			this.highlighted = highlighted;
 		}
 
-		@Override public void clicked (InputEvent event, float x, float y) {
+		@Override
+		public void clicked (InputEvent event, float x, float y) {
 			Vector2 pos = self.localToStageCoordinates(new Vector2(x, y));
 			display.openContext(self, pos.x, pos.y);
 		}
 
-		@Override public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
-			if (pointer != -1)
-				return;
+		@Override
+		public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			if (pointer != -1) return;
 			self.getStyle().background = highlighted;
 		}
 
-		@Override public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
-			if (pointer != -1)
-				return;
+		@Override
+		public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
+			if (pointer != -1) return;
 			self.getStyle().background = null;
 		}
 	}

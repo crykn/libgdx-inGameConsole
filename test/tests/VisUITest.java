@@ -1,3 +1,4 @@
+
 package tests;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -14,13 +15,14 @@ import com.strongjoshua.console.GUIConsole;
 import com.strongjoshua.console.LogLevel;
 
 public class VisUITest extends ApplicationAdapter {
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		new LwjglApplication(new VisUITest(), new LwjglApplicationConfiguration());
 	}
 
 	private Console console;
 
-	@Override public void create () {
+	@Override
+	public void create () {
 		VisUI.load();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		console = new GUIConsole(VisUI.getSkin(), false, 0, VisWindow.class, VisTable.class, "default-pane", TextField.class,
@@ -33,17 +35,18 @@ public class VisUITest extends ApplicationAdapter {
 		console.resetInputProcessing();
 	}
 
-	@Override public void render () {
+	@Override
+	public void render () {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		console.draw();
 	}
 
 	private class MyCommandExecutor extends CommandExecutor {
-		public void success() {
+		public void success () {
 			console.log("Success", LogLevel.SUCCESS);
 		}
 
-		public void error() {
+		public void error () {
 			console.log("Error", LogLevel.ERROR);
 		}
 	}

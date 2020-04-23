@@ -11,7 +11,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-     maven { url "http://repo.maven.apache.org/maven2" }
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 ext {
@@ -61,7 +65,7 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
+/*signing {
     sign configurations.archives
 }
 
@@ -108,4 +112,4 @@ uploadArchives {
             }
         }
     }
-}
+}*/
